@@ -14,14 +14,29 @@ get '/top' do
   erb :index
 end
 
+get '/newMemo' do
+  erb :newMemo
+end
+
+post '/new/create' do
+  max_id = 0
+  memos = JSON.parse(File.read('data.json'))
+  memos['memos'].each do |memo|
+    max_id = memo['id'].to_i + 1 if max_id < memo['id'].to_i
+  end
+  p max_id
+  new_data = { "id": max_id.to_s, "title": params[:title], "body": params[:body] }
+  memos['memos'].push(new_data)
+  File.write('data.json', memos.to_json)
+  redirect '/top'
+end
+
 get '/:id/show-memo' do
   @title = ''
   @body = ''
-  p params[:id].to_s
   File.open('data.json', 'r') do |file|
     memos = JSON.parse(file.read)
     find_data = memos['memos'].find { |item| item['id'] == params[:id].to_s }
-    p find_data
     if find_data != ''
       @id = find_data['id']
       @title = find_data['title']
@@ -34,11 +49,9 @@ end
 post '/editMemo/:id' do
   @title = ''
   @body = ''
-  p params[:id].to_s
   File.open('data.json', 'r') do |file|
     memos = JSON.parse(file.read)
     find_data = memos['memos'].find { |item| item['id'] == params[:id].to_s }
-    p find_data
     if find_data != ''
       @id = find_data['id']
       @title = find_data['title']
@@ -49,15 +62,26 @@ post '/editMemo/:id' do
 end
 
 post '/editMemo/:id/update' do
-  File.open('data.json', 'r+') do |file|
-    memos = JSON.parse(file.read)
-    p result = memos['memos'].map { |item| item['id'] == params[:id].to_s ? params[:title] : item['title'] }
-    # mods.map! { |item| item['id'] == params[:id].to_s ? params[:body] : item['body'] }
-    # p memos['memos']
-    # if memos['memos']
-    #  file.write(memos['memos'])
-    # end
+  memos = JSON.parse(File.read('data.json'))
+  memos['memos'].each do |memo|
+    if memo['id'] == params[:id]
+      memo['title'] = params[:title]
+      memo['body'] = params[:body]
+    end
   end
+  File.write('data.json', memos.to_json)
+  redirect '/top'
+end
+
+delete '/delete/:id' do
+  new_hash = {}
+  new_array = []
+  memos = JSON.parse(File.read('data.json'))
+  memos['memos'].each do |memo|
+    new_array.push(memo) if memo['id'] != params[:id]
+    new_hash = { 'memos': new_array }
+  end
+  File.write('data.json', new_hash.to_json)
   redirect '/top'
 end
 

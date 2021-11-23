@@ -10,7 +10,7 @@
     <input type="hidden" name="body" value="<%= @body %>">
   </form>
 
-  <form>
+  <form method="post" action="/delete/<%= @id %>">
     <td><input type="submit" value="削除"></td>
     <input type="hidden" name="id" value="#{@id}">
     <input type="hidden" name="_method" value="delete">
