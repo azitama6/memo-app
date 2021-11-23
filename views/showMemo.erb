@@ -1,3 +1,20 @@
 <h1>メモアプリ</h1>
 <h2> <%= @title %> </h2>
 <h2> <%= @body %> </h2>
+
+
+<table>
+  <form method="post" action="/editMemo/<%= @id %>">
+    <td><input type="submit" value="変更"></td>
+    <input type="hidden" name="title" value="<%= @title %>">
+    <input type="hidden" name="body" value="<%= @body %>">
+  </form>
+
+  <form>
+    <td><input type="submit" value="削除"></td>
+    <input type="hidden" name="id" value="#{@id}">
+    <input type="hidden" name="_method" value="delete">
+  </form>
+</table>
+
+</form>
