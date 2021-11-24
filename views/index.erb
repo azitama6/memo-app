@@ -1,14 +1,17 @@
-<table>
-  <tr>
-    <td>
-      <h1>メモアプリ</h1>
-    </td>
-    <td>
-      <form method="get" action="/newMemo">
-        <input type="submit" value="追加">
-      </form>
-    </td>
-  </tr>
-</table>
-
-<%= @h %>
+<div class="content">
+  <header>
+    <table>
+      <tr>
+        <td>
+          <h1>メモアプリ</h1>
+        </td>
+        <td id="addBtn">
+          <form method="get" action="/newMemo">
+            <input id="newBtn" type="submit" value="追加">
+          </form>
+        </td>
+      </tr>
+    </table>
+  </header>
+  <%= @h %>
+</div>
