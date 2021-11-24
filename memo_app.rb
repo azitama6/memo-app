@@ -22,10 +22,10 @@ post '/new/create' do
   max_id = 0
   memos = JSON.parse(File.read('data.json'))
   memos['memos'].each do |memo|
-    max_id = memo['id'].to_i + 1 if max_id < memo['id'].to_i
+    max_id = memo['id'].to_i if max_id < memo['id'].to_i
   end
   p max_id
-  new_data = { "id": max_id.to_s, "title": params[:title], "body": params[:body] }
+  new_data = { "id": (max_id + 1).to_s, "title": h(params[:title]), "body": h(params[:body]) }
   memos['memos'].push(new_data)
   File.write('data.json', memos.to_json)
   redirect '/top'
@@ -46,7 +46,7 @@ get '/:id/show-memo' do
   erb :showMemo
 end
 
-post '/editMemo/:id' do
+get '/editMemo/:id' do
   @title = ''
   @body = ''
   File.open('data.json', 'r') do |file|
@@ -61,12 +61,12 @@ post '/editMemo/:id' do
   erb :editMemo
 end
 
-post '/editMemo/:id/update' do
+patch '/editMemo/:id/update' do
   memos = JSON.parse(File.read('data.json'))
   memos['memos'].each do |memo|
     if memo['id'] == params[:id]
-      memo['title'] = params[:title]
-      memo['body'] = params[:body]
+      memo['title'] = h(params[:title])
+      memo['body'] = h(params[:body])
     end
   end
   File.write('data.json', memos.to_json)
@@ -91,4 +91,10 @@ end
 
 get '*' do
   redirect '/page-notfound'
+end
+
+helpers do
+  def h(text)
+    Rack::Utils.escape_html(text)
+  end
 end

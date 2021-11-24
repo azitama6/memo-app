@@ -4,10 +4,8 @@
 
 
 <table>
-  <form method="post" action="/editMemo/<%= @id %>">
+  <form method="get" action="/editMemo/<%= @id %>">
     <td><input type="submit" value="変更"></td>
-    <input type="hidden" name="title" value="<%= @title %>">
-    <input type="hidden" name="body" value="<%= @body %>">
   </form>
 
   <form method="post" action="/delete/<%= @id %>">
