@@ -16,11 +16,11 @@ get '/' do
   erb :index
 end
 
-get '/newMemo' do
+get '/memos/new' do
   erb :newMemo
 end
 
-post '/new/create' do
+post '/memos/create' do
   max_id = 0
   memos = JSON.parse(File.read('data.json'))
   memos['memos'].each do |memo|
