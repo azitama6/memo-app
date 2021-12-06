@@ -9,7 +9,7 @@ get '/' do
     memos = JSON.parse(file.read)
     @h += '<ul>'
     memos['memos'].each do |data|
-      @h += "<li><a href='http://localhost:4567/#{data['id']}/show-memo'>#{data['title']}</a></li>"
+      @h += "<li><a href='http://localhost:4567/memos/#{data['id']}'>#{data['title']}</a></li>"
     end
     @h += '</ul>'
   end
@@ -33,7 +33,7 @@ post '/memos/create' do
   redirect '/'
 end
 
-get '/:id/show-memo' do
+get '/memos/:id' do
   @title = ''
   @body = ''
   File.open('data.json', 'r') do |file|
