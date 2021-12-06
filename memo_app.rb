@@ -3,7 +3,7 @@
 require 'sinatra'
 require 'json'
 
-get '/top' do
+get '/' do
   @h = ''
   File.open('data.json', 'r') do |file|
     memos = JSON.parse(file.read)
@@ -30,7 +30,7 @@ post '/new/create' do
   new_data = { "id": (max_id + 1).to_s, "title": h(params[:title]), "body": h(params[:body]) }
   memos['memos'].push(new_data)
   File.write('data.json', memos.to_json)
-  redirect '/top'
+  redirect '/'
 end
 
 get '/:id/show-memo' do
@@ -72,7 +72,7 @@ patch '/editMemo/:id/update' do
     end
   end
   File.write('data.json', memos.to_json)
-  redirect '/top'
+  redirect '/'
 end
 
 delete '/delete/:id' do
@@ -84,7 +84,7 @@ delete '/delete/:id' do
     new_hash = { 'memos': new_array }
   end
   File.write('data.json', new_hash.to_json)
-  redirect '/top'
+  redirect '/'
 end
 
 get '/page-notfound' do
