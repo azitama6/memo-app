@@ -20,7 +20,7 @@ post '/memos/create' do
   memos['memos'].each do |memo|
     max_id = memo['id'].to_i if max_id < memo['id'].to_i
   end
-  new_data = { "id": (max_id + 1).to_s, "title": h(params[:title]), "body": h(params[:body]) }
+  new_data = { "id": (max_id + 1).to_s, "title": params[:title], "body": params[:body] }
   memos['memos'].push(new_data)
   File.write('data.json', memos.to_json)
   redirect '/'
@@ -60,8 +60,8 @@ patch '/editMemo/:id/update' do
   memos = JSON.parse(File.read('data.json'))
   memos['memos'].each do |memo|
     if memo['id'] == params[:id]
-      memo['title'] = h(params[:title])
-      memo['body'] = h(params[:body])
+      memo['title'] = params[:title]
+      memo['body'] = params[:body]
     end
   end
   File.write('data.json', memos.to_json)

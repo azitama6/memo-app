@@ -1,8 +1,8 @@
 <h1>メモアプリ</h1>
 <div class="content">
-  <form method="post" action="/editMemo/<%= @id %>/update">
-    <p><input type="text" class="textBoxTitle" required maxlength='20' name="title" value="<%= @title %>"></p>
-    <p><textarea class="textBoxBody" required maxlength='500' name="body"><%= @body %></textarea></p>
+  <form method="post" action="/editMemo/<%= h(@id) %>/update">
+    <p><input type="text" class="textBoxTitle" required maxlength='20' name="title" value="<%= h(@title) %>"></p>
+    <p><textarea class="textBoxBody" required maxlength='500' name="body"><%= h(@body) %></textarea></p>
     <input type="hidden" name="_method" value="patch">
     <p><input type="submit" value="変更"></p>
   </form>
