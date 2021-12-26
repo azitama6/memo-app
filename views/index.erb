@@ -13,5 +13,11 @@
       </tr>
     </table>
   </header>
-  <%= @h %>
+  <ul>
+    <% @memos['memos'].each do |memo| %>
+    <li>
+      <a href="http://localhost:4567/memos/<%=memo['id']%>"> <%=memo['title']%> </a>
+    </li>
+    <% end%>
+  </ul>
 </div>

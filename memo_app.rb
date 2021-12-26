@@ -4,14 +4,8 @@ require 'sinatra'
 require 'json'
 
 get '/' do
-  @h = ''
   File.open('data.json', 'r') do |file|
-    memos = JSON.parse(file.read)
-    @h += '<ul>'
-    memos['memos'].each do |data|
-      @h += "<li><a href='http://localhost:4567/memos/#{data['id']}'>#{data['title']}</a></li>"
-    end
-    @h += '</ul>'
+    @memos = JSON.parse(file.read)
   end
   erb :index
 end
@@ -26,7 +20,6 @@ post '/memos/create' do
   memos['memos'].each do |memo|
     max_id = memo['id'].to_i if max_id < memo['id'].to_i
   end
-  p max_id
   new_data = { "id": (max_id + 1).to_s, "title": h(params[:title]), "body": h(params[:body]) }
   memos['memos'].push(new_data)
   File.write('data.json', memos.to_json)
