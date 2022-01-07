@@ -93,3 +93,7 @@ helpers do
     Rack::Utils.escape_html(text)
   end
 end
+
+def find_memo(id)
+
+end
