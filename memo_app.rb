@@ -4,9 +4,7 @@ require 'sinatra'
 require 'json'
 
 get '/' do
-  File.open('data.json', 'r') do |file|
-    @memos = JSON.parse(file.read)
-  end
+  @memos = JSON.parse(File.read('data.json'))
   erb :index
 end
 
@@ -29,14 +27,11 @@ end
 get '/memos/:id' do
   @title = ''
   @body = ''
-  File.open('data.json', 'r') do |file|
-    memos = JSON.parse(file.read)
-    find_data = memos['memos'].find { |item| item['id'] == params[:id].to_s }
-    if find_data != ''
-      @id = find_data['id']
-      @title = find_data['title']
-      @body = find_data['body']
-    end
+  find_data = find_memo(params[:id])
+  if find_data != ''
+    @id = find_data['id']
+    @title = find_data['title']
+    @body = find_data['body']
   end
   erb :showMemo
 end
@@ -44,14 +39,11 @@ end
 get '/editMemo/:id' do
   @title = ''
   @body = ''
-  File.open('data.json', 'r') do |file|
-    memos = JSON.parse(file.read)
-    find_data = memos['memos'].find { |item| item['id'] == params[:id].to_s }
-    if find_data != ''
-      @id = find_data['id']
-      @title = find_data['title']
-      @body = find_data['body']
-    end
+  find_data = find_memo(params[:id])
+  if find_data != ''
+    @id = find_data['id']
+    @title = find_data['title']
+    @body = find_data['body']
   end
   erb :editMemo
 end
@@ -95,5 +87,6 @@ helpers do
 end
 
 def find_memo(id)
-
+  memos = JSON.parse(File.read('data.json'))
+  memos['memos'].find { |memo| memo['id'] == id.to_s }
 end
