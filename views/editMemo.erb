@@ -1,6 +1,6 @@
 <h1>メモアプリ</h1>
+<% memo = @memo.slice("id", "title", "body") %>
 <div class="content">
-  <% memo = @memos.slice("id", "title", "body") %>
   <form method="post" action="/editMemo/<%= h(memo["id"]) %>/update">
     <p><input type="text" class="textBoxTitle" required maxlength='20' name="title" value="<%= h(memo["title"]) %>"></p>
     <p><textarea class="textBoxBody" required maxlength='500' name="body"><%= h(memo["body"]) %></textarea></p>

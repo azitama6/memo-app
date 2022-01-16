@@ -28,11 +28,7 @@ get '/memos/:id' do
   @title = ''
   @body = ''
   find_data = find_memo(params[:id])
-  if find_data != ''
-    @id = find_data['id']
-    @title = find_data['title']
-    @body = find_data['body']
-  end
+  @memo = find_data unless find_data.empty?
   erb :showMemo
 end
 
@@ -40,7 +36,7 @@ get '/editMemo/:id' do
   @title = ''
   @body = ''
   find_data = find_memo(params[:id])
-  @memos = find_data unless find_data.empty?
+  @memo = find_data unless find_data.empty?
   erb :editMemo
 end
 

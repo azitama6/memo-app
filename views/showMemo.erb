@@ -1,15 +1,16 @@
 <h1>メモアプリ</h1>
+<% memo = @memo.slice("id", "title", "body") %>
 <div class="content">
-  <h2> <%= @title %> </h2>
-  <p><%= @body %></p>
+  <h2> <%= memo["title"] %> </h2>
+  <p><%= memo["body"] %></p>
   <div class="btnArea">
     <table>
-      <form method="get" action="/editMemo/<%= @id %>">
+      <form method="get" action="/editMemo/<%= memo["id"] %>">
         <td><input type="submit" value="変更"></td>
       </form>
-      <form method="post" action="/delete/<%= @id %>">
+      <form method="post" action="/delete/<%= memo["id"] %>">
         <td><input type="submit" value="削除"></td>
-        <input type="hidden" name="id" value="#{@id}">
+        <input type="hidden" name="id" value="<%= memo["id"] %>">
         <input type="hidden" name="_method" value="delete">
       </form>
     </table>
