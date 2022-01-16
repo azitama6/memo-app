@@ -12,7 +12,7 @@ get '/memos/new' do
   erb :newMemo
 end
 
-post '/memos/create' do
+post '/memos' do
   max_id = 0
   memos = JSON.parse(File.read('data.json'))
   memos['memos'].each do |memo|
