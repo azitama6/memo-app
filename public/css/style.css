@@ -1,0 +1,69 @@
+html {
+  font-family: arial, sans-serif;
+}
+body {
+  color: #686357;
+  background-color: #F9F8F4;
+}
+img {
+  max-width: 100%;
+  vertical-align: bottom;
+}
+.container {
+  width: 480px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-top: 10px;
+  padding-left: 10px;
+  background-color: rgb(255, 254, 254);
+  box-shadow: rgba(0, 0, 0, .4) 0 0 8px;
+  /* floatを使った場合の対策 */
+  overflow: hidden;
+}
+.content {
+  padding-right: 10px;
+  padding-bottom: 10px;
+}
+.textBoxTitle {
+  width: 70%;
+  height: 30px;
+  font-size: 16px;
+  border-radius: 5px;
+  border: 1px solid;
+}
+.textBoxBody {
+  width: 100%;
+  height: 200px;
+  font-size: 12px;
+  border-radius: 5px;
+}
+h1 {
+  color: #3B4675;
+  margin-block-start: 0px;
+  margin-block-end: 0px;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
+}
+li {
+  color: #686357;
+  font-size: 20px;
+}
+.btnArea td {
+  padding-top: 15px;
+  padding-right: 15px;
+}
+input[type = "submit"] {
+  width: 80px;
+  height: 40px;
+  border-radius: 7px;
+}
+
+#addBtn {
+  padding-left: 220px;
+}
+
+#newBtn {
+  width: 80px;
+  height: 40px;
+  border-radius: 7px;
+}
