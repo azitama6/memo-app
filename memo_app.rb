@@ -10,7 +10,7 @@ Dotenv.load
 class Memo
   class << self
     def all_memos(connection)
-      p connection.exec("SELECT * FROM #{ENV["TABLE_NAME"]} ").map{|row| row }
+      connection.exec("SELECT * FROM #{ENV["TABLE_NAME"]} ").map{|row| row }
     end
     def find_memos(connection, id)
       memos = connection.exec("SELECT * FROM #{ENV["TABLE_NAME"]} WHERE id = #{id} ").map{|row| row }
@@ -43,7 +43,7 @@ get '/memos/new' do
 end
 
 post '/memos' do
-  Memo.create_memo(params[:title], params[:body])
+  Memo.create_memo(connection, params[:title], params[:body])
   redirect '/'
 end
 
