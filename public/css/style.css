@@ -9,6 +9,12 @@ img {
   max-width: 100%;
   vertical-align: bottom;
 }
+a {
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
 .container {
   width: 480px;
   margin-left: auto;
