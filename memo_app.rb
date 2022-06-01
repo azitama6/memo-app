@@ -18,8 +18,7 @@ class Memo
     end
 
     def find_memo(id)
-      # connection = PG::connect(host: ENV["DB_HOST"], password: ENV["DB_PASS"], user: ENV["DB_USER"], dbname: ENV["DB_NAME"], port: ENV["DB_PORT"])
-      connection.exec("SELECT * FROM MEMO WHERE id = #{id} ORDER BY ID")
+      memos = connection.exec("SELECT * FROM MEMO WHERE id = '#{id}' ORDER BY ID")
       memos.find { |memo| memo['id'] == id.to_s }
     end
 
@@ -34,6 +33,7 @@ class Memo
     def update_memo(id, title, body)
       connection.exec("UPDATE MEMO SET title = \'#{title}\', body = \'#{body}\' WHERE id = #{id} ")
     end
+    connection.finish
   end
 end
 
@@ -54,14 +54,12 @@ post '/memos' do
 end
 
 get '/memos/:id' do
-  find_data = Memo.find_memo(params[:id])
-  @memo = find_data unless find_data.empty?
+  @memo = Memo.find_memo(params[:id])
   erb :showMemo
 end
 
 get '/editMemo/:id' do
-  find_data = Memo.find_memos(params[:id])
-  @memo = find_data unless find_data.empty?
+  @memo = Memo.find_memo(params[:id])
   erb :editMemo
 end
 
