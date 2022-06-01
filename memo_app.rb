@@ -13,7 +13,7 @@ class Memo
       PG::connect(host: ENV["DB_HOST"], password: ENV["DB_PASS"], user: ENV["DB_USER"], dbname: ENV["DB_NAME"], port: ENV["DB_PORT"])
     end
 
-    def all_memo
+    def show
       connection.exec("SELECT * FROM MEMO ORDER BY ID")
     end
 
@@ -37,7 +37,7 @@ class Memo
 end
 
 get '/' do
-  @memos = Memo.all_memo
+  @memos = Memo.show
   erb :index
 end
 
