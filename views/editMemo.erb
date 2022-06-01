@@ -1,9 +1,9 @@
-<h1><a href="http://localhost:4567/"> メモアプリ</a></h1>
-<% memo = @memo.slice("id", "title", "body") %>
+<h1><a href="http://localhost:4567/">メモアプリ</a></h1>
 <div class="content">
-  <form method="post" action="/editMemo/<%= h(memo["id"]) %>/update">
-    <p><input type="text" class="textBoxTitle" required maxlength='20' name="title" value="<%= h(memo["title"]) %>"></p>
-    <p><textarea class="textBoxBody" required maxlength='500' name="body"><%= h(memo["body"]) %></textarea></p>
+  <form method="post" action="/editMemo/<%= h(@memo["id"]) %>/update">
+    <p><input type="text" class="textBoxTitle" required maxlength='20' name="title" value="<%= h(@memo["title"]) %>">
+    </p>
+    <p><textarea class="textBoxBody" required maxlength='500' name="body"><%= h(@memo["body"]) %></textarea></p>
     <input type="hidden" name="_method" value="patch">
     <p><input type="submit" value="変更"></p>
   </form>
