@@ -17,27 +17,24 @@ class Memo
       connection.exec("SELECT * FROM MEMO ORDER BY ID")
     end
 
-    def find_memo(id)
+    def find(id)
       memos = connection.exec("SELECT * FROM MEMO WHERE id = '#{id}' ORDER BY ID")
       memos.find { |memo| memo['id'] == id.to_s }
     end
 
-    def create_memo(title, body)
+    def create(title, body)
       connection.exec("INSERT INTO MEMO (title, body) VALUES(\'#{title}\', \'#{body}\') ")
     end
 
-    def delete_memo(id)
+    def delete(id)
       connection.exec("DELETE FROM MEMO WHERE id = #{id} ")
     end
 
-    def update_memo(id, title, body)
+    def update(id, title, body)
       connection.exec("UPDATE MEMO SET title = \'#{title}\', body = \'#{body}\' WHERE id = #{id} ")
     end
-    connection.finish
   end
 end
-
-
 
 get '/' do
   @memos = Memo.all_memo
@@ -49,27 +46,27 @@ get '/memos/new' do
 end
 
 post '/memos' do
-  Memo.create_memo(params[:title], params[:body])
+  Memo.create(params[:title], params[:body])
   redirect '/'
 end
 
 get '/memos/:id' do
-  @memo = Memo.find_memo(params[:id])
+  @memo = Memo.find(params[:id])
   erb :showMemo
 end
 
 get '/editMemo/:id' do
-  @memo = Memo.find_memo(params[:id])
+  @memo = Memo.find(params[:id])
   erb :editMemo
 end
 
 patch '/editMemo/:id/update' do
-  Memo.update_memo(params[:id], params[:title], params[:body])
+  Memo.update(params[:id], params[:title], params[:body])
   redirect '/'
 end
 
 delete '/delete/:id' do
-  Memo.delete_memo(params[:id])
+  Memo.delete(params[:id])
   redirect '/'
 end
 
