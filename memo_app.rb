@@ -9,32 +9,38 @@ Dotenv.load
 
 class Memo
   class << self
-    def all_memo(connection)
+    def connection
+      PG::connect(host: ENV["DB_HOST"], password: ENV["DB_PASS"], user: ENV["DB_USER"], dbname: ENV["DB_NAME"], port: ENV["DB_PORT"])
+    end
+
+    def all_memo
       connection.exec("SELECT * FROM MEMO ORDER BY ID")
     end
-    def find_memo(connection, id)
-      memos = connection.exec("SELECT * FROM MEMO WHERE id = #{id} ORDER BY ID")
+
+    def find_memo(id)
+      # connection = PG::connect(host: ENV["DB_HOST"], password: ENV["DB_PASS"], user: ENV["DB_USER"], dbname: ENV["DB_NAME"], port: ENV["DB_PORT"])
+      connection.exec("SELECT * FROM MEMO WHERE id = #{id} ORDER BY ID")
       memos.find { |memo| memo['id'] == id.to_s }
     end
 
-    def create_memo(connection, title, body)
+    def create_memo(title, body)
       connection.exec("INSERT INTO MEMO (title, body) VALUES(\'#{title}\', \'#{body}\') ")
     end
 
-    def delete_memo(connection, id)
+    def delete_memo(id)
       connection.exec("DELETE FROM MEMO WHERE id = #{id} ")
     end
 
-    def update_memo(connection, id, title, body)
+    def update_memo(id, title, body)
       connection.exec("UPDATE MEMO SET title = \'#{title}\', body = \'#{body}\' WHERE id = #{id} ")
     end
   end
 end
 
-connection = PG::connect(host: ENV["DB_HOST"], password: ENV["DB_PASS"], user: ENV["DB_USER"], dbname: ENV["DB_NAME"], port: ENV["DB_PORT"])
+
 
 get '/' do
-  @memos = Memo.all_memo(connection)
+  @memos = Memo.all_memo
   erb :index
 end
 
@@ -43,29 +49,29 @@ get '/memos/new' do
 end
 
 post '/memos' do
-  Memo.create_memo(connection, params[:title], params[:body])
+  Memo.create_memo(params[:title], params[:body])
   redirect '/'
 end
 
 get '/memos/:id' do
-  find_data = Memo.find_memo(connection, params[:id])
+  find_data = Memo.find_memo(params[:id])
   @memo = find_data unless find_data.empty?
   erb :showMemo
 end
 
 get '/editMemo/:id' do
-  find_data = Memo.find_memos(connection, params[:id])
+  find_data = Memo.find_memos(params[:id])
   @memo = find_data unless find_data.empty?
   erb :editMemo
 end
 
 patch '/editMemo/:id/update' do
-  Memo.update_memo(connection, params[:id], params[:title], params[:body])
+  Memo.update_memo(params[:id], params[:title], params[:body])
   redirect '/'
 end
 
 delete '/delete/:id' do
-  Memo.delete_memo(connection, params[:id])
+  Memo.delete_memo(params[:id])
   redirect '/'
 end
 
