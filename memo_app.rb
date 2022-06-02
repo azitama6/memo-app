@@ -18,20 +18,19 @@ class Memo
     end
 
     def find(id)
-      memos = connection.exec("SELECT * FROM MEMO WHERE id = '#{id}' ORDER BY ID")
-      memos.find { |memo| memo['id'] == id.to_s }
+      connection.exec("SELECT * FROM MEMO WHERE id = $1 ORDER BY ID", [id])[0]
     end
 
     def create(title, body)
-      connection.exec("INSERT INTO MEMO (title, body) VALUES(\'#{title}\', \'#{body}\') ")
+      connection.exec("INSERT INTO MEMO (title, body) VALUES($1, $2) ", [title, body])
     end
 
     def delete(id)
-      connection.exec("DELETE FROM MEMO WHERE id = #{id} ")
+      connection.exec("DELETE FROM MEMO WHERE id = $1 ", [id])
     end
 
     def update(id, title, body)
-      connection.exec("UPDATE MEMO SET title = \'#{title}\', body = \'#{body}\' WHERE id = #{id} ")
+      connection.exec("UPDATE MEMO SET title = $1, body = $2 WHERE id = $3 ", [title, body, id])
     end
   end
 end
