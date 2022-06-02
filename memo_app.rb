@@ -7,30 +7,31 @@ require 'dotenv'
 
 Dotenv.load
 
+# MemoClass for Run SQL
 class Memo
   class << self
     def connection
-      PG::connect(host: ENV["DB_HOST"], password: ENV["DB_PASS"], user: ENV["DB_USER"], dbname: ENV["DB_NAME"], port: ENV["DB_PORT"])
+      PG::connect(host: ENV['DB_HOST'], password: ENV['DB_PASS'], user: ENV['DB_USER'], dbname: ENV['DB_NAME'], port: ENV['DB_PORT'])
     end
 
     def show
-      connection.exec("SELECT * FROM MEMO ORDER BY ID")
+      connection.exec('SELECT * FROM MEMO ORDER BY ID')
     end
 
     def find(id)
-      connection.exec("SELECT * FROM MEMO WHERE id = $1 ORDER BY ID", [id])[0]
+      connection.exec('SELECT * FROM MEMO WHERE id = $1 ORDER BY ID', [id])[0]
     end
 
     def create(title, body)
-      connection.exec("INSERT INTO MEMO (title, body) VALUES($1, $2) ", [title, body])
+      connection.exec('INSERT INTO MEMO (title, body) VALUES($1, $2) ', [title, body])
     end
 
     def delete(id)
-      connection.exec("DELETE FROM MEMO WHERE id = $1 ", [id])
+      connection.exec('DELETE FROM MEMO WHERE id = $1 ', [id])
     end
 
     def update(id, title, body)
-      connection.exec("UPDATE MEMO SET title = $1, body = $2 WHERE id = $3 ", [title, body, id])
+      connection.exec('UPDATE MEMO SET title = $1, body = $2 WHERE id = $3 ', [title, body, id])
     end
   end
 end
