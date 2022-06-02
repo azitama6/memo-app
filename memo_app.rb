@@ -11,7 +11,7 @@ Dotenv.load
 class Memo
   class << self
     def connection
-      PG::connect(host: ENV['DB_HOST'], password: ENV['DB_PASS'], user: ENV['DB_USER'], dbname: ENV['DB_NAME'], port: ENV['DB_PORT'])
+      PG.connect(host: ENV['DB_HOST'], password: ENV['DB_PASS'], user: ENV['DB_USER'], dbname: ENV['DB_NAME'], port: ENV['DB_PORT'])
     end
 
     def show
