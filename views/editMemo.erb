@@ -1,6 +1,6 @@
 <h1><a href="/">メモアプリ</a></h1>
 <div class="content">
-  <form method="post" action="/editMemo/<%= h(@memo["id"]) %>/update">
+  <form method="post" action="/editMemo/<%= @memo["id"] %>/update">
     <input type="text" class="textBoxTitle" required maxlength='20' name="title" value="<%= h(@memo["title"]) %>">
     <textarea class="textBoxBody" required maxlength='500' name="body"><%= h(@memo["body"]) %></textarea>
     <input type="hidden" name="_method" value="patch">
