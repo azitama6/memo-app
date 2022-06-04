@@ -4,9 +4,8 @@
 
 CREATE TABLE IF NOT EXISTS public.memo
 (
-    id integer NOT NULL DEFAULT nextval('memo_id_seq'::regclass),
-    title character varying(400) COLLATE pg_catalog."default",
-    body character varying(400) COLLATE pg_catalog."default"
-)
+    id serial PRIMARY KEY NOT NULL,
+    title character varying(400),
+    body character varying(400)
+);
 
-TABLESPACE pg_default;
