@@ -14,4 +14,4 @@ bundle install
 bundle exec ruby memo_app.rb
 ```
 
-Goto http://localhost:4567/top
+Goto http://localhost:4567/

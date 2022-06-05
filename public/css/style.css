@@ -9,6 +9,12 @@ img {
   max-width: 100%;
   vertical-align: bottom;
 }
+a {
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
 .container {
   width: 480px;
   margin-left: auto;
@@ -30,12 +36,14 @@ img {
   font-size: 16px;
   border-radius: 5px;
   border: 1px solid;
+  margin-bottom: 20px;
 }
 .textBoxBody {
   width: 100%;
   height: 200px;
   font-size: 12px;
   border-radius: 5px;
+  margin-bottom: 10px;
 }
 h1 {
   color: #3B4675;
