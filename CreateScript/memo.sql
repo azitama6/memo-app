@@ -4,8 +4,7 @@
 
 CREATE TABLE IF NOT EXISTS public.memo
 (
-    id serial PRIMARY KEY NOT NULL,
+    id serial NOT NULL PRIMARY KEY,
     title character varying(400),
     body character varying(400)
-);
-
+)
